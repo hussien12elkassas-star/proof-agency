@@ -44,9 +44,7 @@
     }
   </script>
 
-  <!-- GSAP & Lucide Icons -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -142,6 +140,36 @@
     .animate-float {
       animation: industrialFloat 5s infinite ease-in-out;
     }
+
+    .scroll-responsive-text {
+      position: relative;
+    }
+
+    .scroll-responsive-text[data-scroll-depth="0"] { top: var(--scroll-text-shift-a, 0px); }
+    .scroll-responsive-text[data-scroll-depth="1"] { top: var(--scroll-text-shift-b, 0px); }
+    .scroll-responsive-text[data-scroll-depth="2"] { top: var(--scroll-text-shift-c, 0px); }
+
+    .nav-link-active {
+      color: #ffffff !important;
+      text-decoration: underline;
+      text-decoration-color: #a8213d;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 8px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto !important;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-proof-charcoal text-gray-100 antialiased relative">
@@ -160,6 +188,7 @@
 
   <!-- ==================== HEADER / NAVBAR ==================== -->
   <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-proof-charcoal/80 border-b border-proof-border">
+    <div id="scroll-progress" aria-hidden="true" class="absolute bottom-0 right-0 h-0.5 w-full origin-right scale-x-0 bg-proof-redLight"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
       <!-- Brand Logo -->
@@ -859,6 +888,54 @@
     // Initialize Lucide Icons
     lucide.createIcons();
 
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pageSections = Array.from(document.querySelectorAll('main section[id]'));
+    const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
+    const scrollProgress = document.getElementById('scroll-progress');
+    const textDepthCount = 3;
+    const textElements = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,button,label,blockquote,summary,td,th,div,span,strong,em');
+
+    textElements.forEach((element, index) => {
+      const hasDirectText = Array.from(element.childNodes).some(node =>
+        node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+      );
+      const semanticText = /^(H[1-6]|P|LI|A|BUTTON|LABEL|BLOCKQUOTE|SUMMARY|TD|TH)$/.test(element.tagName);
+      if ((!semanticText && !hasDirectText) || element.parentElement.closest('.scroll-responsive-text')) return;
+      element.classList.add('scroll-responsive-text');
+      element.dataset.scrollDepth = index % textDepthCount;
+    });
+
+    let scrollUpdateFrame = null;
+    function updateScrollExperience() {
+      scrollUpdateFrame = null;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+      scrollProgress.style.transform = `scaleX(${progress})`;
+      const textShift = motionPreference.matches ? 0 : Math.sin(window.scrollY * 0.012) * 2.5;
+      const pageStyle = document.documentElement.style;
+      pageStyle.setProperty('--scroll-text-shift-a', `${textShift.toFixed(2)}px`);
+      pageStyle.setProperty('--scroll-text-shift-b', `${(textShift * -0.7).toFixed(2)}px`);
+      pageStyle.setProperty('--scroll-text-shift-c', `${(textShift * 0.45).toFixed(2)}px`);
+
+      const activeSection = [...pageSections].reverse().find(section =>
+        section.getBoundingClientRect().top <= window.innerHeight * 0.35
+      ) || pageSections[0];
+      navLinks.forEach(link => {
+        const isActive = activeSection && link.getAttribute('href') === `#${activeSection.id}`;
+        link.classList.toggle('nav-link-active', Boolean(isActive));
+        if (isActive) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+
+    function scheduleScrollExperienceUpdate() {
+      if (scrollUpdateFrame === null) scrollUpdateFrame = requestAnimationFrame(updateScrollExperience);
+    }
+
+    window.addEventListener('scroll', scheduleScrollExperienceUpdate, { passive: true });
+    window.addEventListener('resize', scheduleScrollExperienceUpdate);
+    updateScrollExperience();
+
     // ----------------------------------------------------------------
     // 1. Interactive Cursor Logic
     // ----------------------------------------------------------------
@@ -939,11 +1016,15 @@
     const hudPower = document.getElementById('hud-power');
 
     let cw, ch;
+    let factoryVisible = false;
+    let factoryFrame = null;
     function resizeCanvas() {
       const rect = canvas.getBoundingClientRect();
-      cw = canvas.width = rect.width * (window.devicePixelRatio || 1);
-      ch = canvas.height = rect.height * (window.devicePixelRatio || 1);
-      ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      cw = canvas.width = rect.width * pixelRatio;
+      ch = canvas.height = rect.height * pixelRatio;
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      if (motionPreference.matches && factoryVisible) renderFactory(false);
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
@@ -1164,7 +1245,7 @@
     }
 
     // Main Canvas Render Loop
-    function renderFactory() {
+    function renderFactory(advanceAnimation = true) {
       const w = canvas.getBoundingClientRect().width;
       const h = canvas.getBoundingClientRect().height;
 
@@ -1345,12 +1426,54 @@
 
       ctx.restore();
 
-      // Step Storyboard
-      runStoryboard();
-      requestAnimationFrame(renderFactory);
+      if (advanceAnimation) runStoryboard();
     }
 
-    renderFactory();
+    function renderFactoryFrame() {
+      factoryFrame = null;
+      if (!factoryVisible || document.hidden || motionPreference.matches) return;
+      renderFactory();
+      factoryFrame = requestAnimationFrame(renderFactoryFrame);
+    }
+
+    function startFactoryAnimation() {
+      if (motionPreference.matches) {
+        renderFactory(false);
+      } else if (factoryVisible && !document.hidden && factoryFrame === null) {
+        factoryFrame = requestAnimationFrame(renderFactoryFrame);
+      }
+    }
+
+    function stopFactoryAnimation() {
+      if (factoryFrame !== null) cancelAnimationFrame(factoryFrame);
+      factoryFrame = null;
+      renderFactory(false);
+    }
+
+    renderFactory(false);
+    if ('IntersectionObserver' in window) {
+      const factoryObserver = new IntersectionObserver(entries => {
+        factoryVisible = entries.some(entry => entry.isIntersecting);
+        if (factoryVisible) startFactoryAnimation();
+        else stopFactoryAnimation();
+      }, { threshold: 0.05 });
+      factoryObserver.observe(canvas);
+    } else {
+      factoryVisible = true;
+      startFactoryAnimation();
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopFactoryAnimation();
+      else startFactoryAnimation();
+    });
+    const handleMotionPreferenceChange = () => {
+      if (motionPreference.matches) stopFactoryAnimation();
+      else startFactoryAnimation();
+      scheduleScrollExperienceUpdate();
+    };
+    if (motionPreference.addEventListener) motionPreference.addEventListener('change', handleMotionPreferenceChange);
+    else motionPreference.addListener(handleMotionPreferenceChange);
 
     // Canvas Replay & Spark Controls
     document.getElementById('replay-motion-btn').addEventListener('click', () => {
@@ -1360,6 +1483,7 @@
       stations.stamping.active = false;
       stations.server.active = false;
       proofIcon.size = 44;
+      if (motionPreference.matches) renderFactory(false);
       playTone(440, 'sine', 0.15, 0.08);
     });
 
@@ -1403,9 +1527,10 @@
 
     function drawChart() {
       const rect = chartCanvas.getBoundingClientRect();
-      chartCanvas.width = rect.width * (window.devicePixelRatio || 1);
-      chartCanvas.height = rect.height * (window.devicePixelRatio || 1);
-      chartCtx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      chartCanvas.width = rect.width * pixelRatio;
+      chartCanvas.height = rect.height * pixelRatio;
+      chartCtx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       const w = rect.width;
       const h = rect.height;
@@ -1510,6 +1635,10 @@
       counters.forEach(c => {
         const target = parseFloat(c.dataset.target);
         const isDecimal = c.dataset.decimal;
+        if (motionPreference.matches) {
+          c.textContent = isDecimal ? target.toFixed(1) : Math.floor(target);
+          return;
+        }
         let current = 0;
         const step = target / 60;
         const timer = setInterval(() => {
