@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROOF Agency | وكالة التسويق والنمو الصناعي للمصانع والشركات الكبرى</title>
+  <meta name="description" content="وكالة PROOF - الشريك الاستراتيجي لإدارة منظومة التسويق والنمو والمبيعات لـ 10 مصانع وشركات كبرى في القطاع الصناعي. Nothing Scales Without PROOF.">
+  <link rel="icon" type="image/svg+xml" href="assets/icon_gradient.svg">
+
+  <!-- Google Fonts: IBM Plex Sans Arabic + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS 3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            proof: {
+              red: '#a8213d',
+              redLight: '#c92a4b',
+              redDark: '#7f152b',
+              purpleLight: '#4f224b',
+              purpleMedium: '#362056',
+              purpleDark: '#2d1f32',
+              charcoal: '#0b070e',
+              surface: '#130d1a',
+              card: '#191122',
+              border: 'rgba(168, 33, 61, 0.22)'
+            }
+          },
+          fontFamily: {
+            arabic: ['IBM Plex Sans Arabic', 'Cairo', 'sans-serif'],
+            cairo: ['Cairo', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP & Lucide Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #0b070e;
+      color: #f3f0f5;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      overflow-x: hidden;
+      selection-background-color: #a8213d;
+      selection-color: #ffffff;
+    }
+
+    ::selection {
+      background: #a8213d;
+      color: #ffffff;
+    }
+
+    /* Industrial Blueprint Grid Background */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(168, 33, 61, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(168, 33, 61, 0.05) 1px, transparent 1px);
+    }
+
+    .bg-dots-pattern {
+      background-image: radial-gradient(rgba(168, 33, 61, 0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Glow Effects */
+    .glow-proof {
+      box-shadow: 0 0 35px -5px rgba(168, 33, 61, 0.45);
+    }
+    .glow-text-red {
+      text-shadow: 0 0 25px rgba(168, 33, 61, 0.7);
+    }
+    .glow-purple {
+      box-shadow: 0 0 40px -8px rgba(79, 34, 75, 0.6);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b070e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #362056;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a8213d;
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      pointer-events: none;
+      position: fixed;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid #a8213d;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background-color 0.2s, transform 0.05s linear;
+      z-index: 9999;
+    }
+    .custom-cursor-dot {
+      pointer-events: none;
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+    }
+
+    /* Animations */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+
+    @keyframes industrialFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float {
+      animation: industrialFloat 5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-proof-charcoal text-gray-100 antialiased relative">
+
+  <!-- Interactive Custom Cursor -->
+  <div id="cursor" class="custom-cursor hidden md:block"></div>
+  <div id="cursor-dot" class="custom-cursor-dot hidden md:block"></div>
+
+  <!-- Ambient Background Aura -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] bg-proof-red/10 rounded-full blur-[140px] animate-pulse-glow"></div>
+    <div class="absolute top-[40%] -right-[15%] w-[45vw] h-[45vw] bg-proof-purpleMedium/15 rounded-full blur-[160px]"></div>
+    <div class="absolute -bottom-[10%] left-[20%] w-[50vw] h-[50vw] bg-proof-purpleLight/10 rounded-full blur-[150px]"></div>
+    <div class="absolute inset-0 bg-grid-pattern opacity-60"></div>
+  </div>
+
+  <!-- ==================== HEADER / NAVBAR ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-proof-charcoal/80 border-b border-proof-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-10 h-10 rounded-lg p-1.5 bg-gradient-to-br from-proof-red to-proof-purpleDark border border-proof-red/40 flex items-center justify-center shadow-lg shadow-proof-red/20 group-hover:scale-105 transition-transform">
+          <img src="assets/icon_white.svg" alt="PROOF Icon" class="w-full h-full object-contain">
+        </div>
+        <div class="flex flex-col text-right">
+          <div class="flex items-center gap-1.5">
+            <span class="font-sans font-black text-2xl tracking-wider text-white">PROOF</span>
+            <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-proof-red/20 text-proof-redLight border border-proof-red/30">AGENCY</span>
+          </div>
+          <span class="text-[10px] text-gray-400 font-mono tracking-widest uppercase">Creative & Growth</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#hero" class="text-gray-300 hover:text-white transition-colors flex items-center gap-1.5">
+          <span class="text-proof-red font-mono text-xs">01.</span> الموشن والقصة
+        </a>
+        <a href="#proof-data" class="text-gray-300 hover:text-white transition-colors flex items-center gap-1.5">
+          <span class="text-proof-red font-mono text-xs">02.</span> نتائج بالأرقام
+        </a>
+        <a href="#showreel" class="text-gray-300 hover:text-white transition-colors flex items-center gap-1.5">
+          <span class="text-proof-red font-mono text-xs">03.</span> الشوريل والحلول
+        </a>
+        <a href="#exclusive-ten" class="text-gray-300 hover:text-white transition-colors flex items-center gap-1.5">
+          <span class="text-proof-red font-mono text-xs">04.</span> شراكة الـ 10 مصانع
+        </a>
+      </nav>
+
+      <!-- Action Button & Audio Toggle -->
+      <div class="flex items-center gap-3">
+        <button id="audio-toggle-btn" class="p-2.5 rounded-lg border border-proof-border bg-proof-surface hover:bg-proof-card text-gray-400 hover:text-white transition-all text-xs flex items-center gap-1.5" title="تفعيل المؤثرات الصوتية">
+          <i data-lucide="volume-2" class="w-4 h-4"></i>
+          <span class="hidden sm:inline font-mono text-[11px]">FX SOUND</span>
+        </button>
+
+        <a href="https://wa.me/201550826700?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%82%D8%B5%D8%A7%D8%B5%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AD%D8%AC%D8%B2%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%AA%D8%AF%D9%82%D9%8A%D9%82%20%D8%AA%D8%B3%D9%88%D9%8A%D9%82%D9%8A%20%D9%88%D9%86%D9%85%D9%88%20%D9%84%D9%85%D8%B5%D9%86%D8%B9%D9%86%D8%A7%20%D9%85%D8%B9%20PROOF%20Agency" target="_blank" rel="noopener noreferrer" class="relative group overflow-hidden px-4 py-2.5 rounded-lg bg-proof-red hover:bg-proof-redLight text-white font-semibold text-xs sm:text-sm transition-all duration-300 shadow-lg shadow-proof-red/30 flex items-center gap-2">
+          <span class="relative z-10 flex items-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>حجز تدقيق مصنع</span>
+          </span>
+          <div class="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-proof-redLight to-proof-purpleLight transition-transform duration-500"></div>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="relative z-10 pt-20">
+
+    <!-- ==================== SECTION 1: 2D MOTION FACTORY HERO ==================== -->
+    <section id="hero" class="min-h-screen relative flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 overflow-hidden border-b border-proof-border/50">
+      
+      <!-- Top Badge -->
+      <div class="mb-4 inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-proof-border bg-proof-surface/90 backdrop-blur-md shadow-inner text-xs font-mono text-gray-300">
+        <span class="w-2 h-2 rounded-full bg-proof-red animate-ping"></span>
+        <span class="text-proof-redLight font-bold">SECTION 01:</span>
+        <span class="tracking-wide">THE INDUSTRIAL MOTION GRAPHICS EXPERIENCE</span>
+      </div>
+
+      <!-- Factory Motion Interactive Canvas Container -->
+      <div class="w-full max-w-6xl relative rounded-2xl overflow-hidden border border-proof-red/30 bg-proof-charcoal/90 shadow-2xl shadow-proof-red/10 backdrop-blur-lg">
+        
+        <!-- Canvas Header Bar with Controls -->
+        <div class="px-4 py-3 bg-proof-surface/90 border-b border-proof-border flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
+          <div class="flex items-center gap-2 text-gray-300">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <span class="mr-2 text-gray-400">|</span>
+            <span class="text-white font-semibold">PROOF_FACTORY_SIMULATOR_2D.EXE</span>
+            <span id="factory-phase-indicator" class="px-2 py-0.5 rounded bg-proof-red/20 text-proof-redLight font-mono border border-proof-red/30">
+              PHASE: INITIALIZING
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="replay-motion-btn" class="px-3 py-1.5 rounded bg-proof-card hover:bg-proof-red/30 border border-proof-border text-gray-200 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>إعادة تشغيل الموشن</span>
+            </button>
+            <button id="toggle-sparks-btn" class="px-3 py-1.5 rounded bg-proof-card hover:bg-proof-purpleMedium border border-proof-border text-gray-200 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-proof-redLight"></i>
+              <span>شرر الليزر: نشط</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- The 2D Motion Graphics Canvas -->
+        <div class="relative w-full h-[450px] sm:h-[540px] md:h-[600px] bg-[#08050b] cursor-crosshair">
+          <canvas id="factory-canvas" class="w-full h-full block"></canvas>
+
+          <!-- Narrative Subtitle Floating HUD Overlay -->
+          <div id="motion-hud" class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-proof-charcoal/85 backdrop-blur-md border border-proof-border text-right transition-all duration-500 shadow-xl">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1">
+                <div class="text-[11px] font-mono text-proof-redLight uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                  <span id="hud-title">فلسفة أيقونة PROOF (المستند المقلوب)</span>
+                </div>
+                <p id="hud-desc" class="text-xs sm:text-sm text-gray-300 leading-relaxed font-arabic">
+                  الأيقونة مستوحاة من مستند رسمي مطوي الحافة (Document of Evidence) للدلالة على أن نمو أي مصنع يحتاج دليلاً وإثباتاً حقيقياً بالأرقام وليس افتراضات.. شاهد الأيقونة وهي تقتحم المصنع وتفعل خطوط الإنتاج.
+                </p>
+              </div>
+              <div class="hidden sm:flex flex-col items-center justify-center px-4 border-r border-proof-border">
+                <span class="text-[10px] font-mono text-gray-400">POWER</span>
+                <span id="hud-power" class="text-base font-mono font-bold text-proof-redLight">0%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Slogan & Call to Action Box Below Canvas -->
+      <div id="hero-slogan-block" class="mt-10 text-center max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black font-sans tracking-tight text-white mb-4">
+          Nothing Scales Without <span class="text-transparent bg-clip-text bg-gradient-to-r from-proof-red via-proof-redLight to-pink-500">PROOF.</span>
+        </h1>
+        <p class="text-lg sm:text-2xl text-gray-200 font-bold font-arabic mb-6">
+          لا شيء يتوسع أو ينمو.. بدون إثبات ودليل قاطع.
+        </p>
+        <p class="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed font-arabic mb-8">
+          وكالة التسويق والنمو الاستراتيجي المخصصة حصرياً للمصانع والشركات الصناعية والهندسية في العاشر من رمضان والشرق الأوسط. نحول طاقة مصنعك إلى تعاقدات تصدير ومبيعات خطوط إنتاج كاملة.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#exclusive-ten" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-proof-red to-proof-purpleMedium hover:from-proof-redLight hover:to-proof-purpleLight text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-xl shadow-proof-red/25 flex items-center justify-center gap-2.5">
+            <i data-lucide="factory" class="w-5 h-5"></i>
+            <span>انضم كأحد المصانع الـ 10 الشريكة</span>
+          </a>
+          <a href="#proof-data" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-proof-surface hover:bg-proof-card border border-proof-border text-gray-200 hover:text-white font-semibold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2">
+            <span>استعراض نتائج وأدلة المشاريع</span>
+            <i data-lucide="arrow-down" class="w-4 h-4 text-proof-red"></i>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== SECTION 2: HARD PROOF & DATA ==================== -->
+    <section id="proof-data" class="py-24 px-4 sm:px-6 lg:px-8 border-b border-proof-border/50 relative bg-proof-charcoal/60">
+      
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="text-right max-w-3xl mb-16">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-proof-border bg-proof-surface text-proof-redLight text-xs font-mono mb-3">
+            <span>02 / HARD PROOF & METRICS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-arabic text-white mb-4">
+            أرقام حقيقية لا تكذب.. نتائج تملأ خطوط الإنتاج
+          </h2>
+          <p class="text-gray-400 text-base sm:text-lg leading-relaxed font-arabic">
+            في القطاع الصناعي (B2B)، لا قيمة للإعجابات أو البوستات الشكلية. مقياس النجاح الوحيد لـ PROOF هو: عدد استفسارات مديري المشتريات، تصدر كلمات الماكينات على جوجل، وحجم المبيعات الفعلي للمصنع.
+          </p>
+        </div>
+
+        <!-- 4 Major Animated Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          
+          <div class="p-6 rounded-2xl bg-proof-surface/80 border border-proof-border hover:border-proof-red/50 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-red/10 border border-proof-red/20 flex items-center justify-center text-proof-red mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="building-2" class="w-6 h-6"></i>
+            </div>
+            <div class="text-4xl sm:text-5xl font-extrabold font-sans text-white mb-1">
+              +<span class="counter" data-target="40">0</span>
+            </div>
+            <h3 class="text-base font-bold text-gray-200 font-arabic mb-2">عميل ومصنع كبرى</h3>
+            <p class="text-xs text-gray-400 font-arabic leading-relaxed">
+              شراكات صناعية وتجارية في مصر (العاشر من رمضان)، السعودية، الإمارات، و New Jersey بأمريكا.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-proof-surface/80 border border-proof-border hover:border-proof-red/50 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-purpleMedium/30 border border-proof-purpleLight/40 flex items-center justify-center text-purple-300 mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="trending-up" class="w-6 h-6"></i>
+            </div>
+            <div class="text-4xl sm:text-5xl font-extrabold font-sans text-white mb-1">
+              +<span class="counter" data-target="180">0</span>%
+            </div>
+            <h3 class="text-base font-bold text-gray-200 font-arabic mb-2">نمو الزيارات المستهدفة</h3>
+            <p class="text-xs text-gray-400 font-arabic leading-relaxed">
+              قفزة في وصول أصحاب المصانع والمقاولين الباحثين عن ماكينات وتوريدات صناعية عبر السيو وإعلانات البحث.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-proof-surface/80 border border-proof-border hover:border-proof-red/50 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-red/10 border border-proof-red/20 flex items-center justify-center text-proof-red mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <div class="text-4xl sm:text-5xl font-extrabold font-sans text-white mb-1">
+              <span class="counter" data-target="99.8" data-decimal="1">0</span>%
+            </div>
+            <h3 class="text-base font-bold text-gray-200 font-arabic mb-2">دقة تتبع التحويلات (CAPI)</h3>
+            <p class="text-xs text-gray-400 font-arabic leading-relaxed">
+              تتبع من جهة السيرفر (Server-Side) يضمن تسجيل كل اتصال وواتساب واستمارة بدون فقدان للبيانات.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-proof-surface/80 border border-proof-border hover:border-proof-red/50 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-purpleLight/20 border border-proof-purpleLight/40 flex items-center justify-center text-pink-300 mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="coins" class="w-6 h-6"></i>
+            </div>
+            <div class="text-4xl sm:text-5xl font-extrabold font-sans text-white mb-1">
+              ملايين
+            </div>
+            <h3 class="text-base font-bold text-gray-200 font-arabic mb-2">حجم خطوط الإنتاج والصفقات</h3>
+            <p class="text-xs text-gray-400 font-arabic leading-relaxed">
+              عقود توريد ماكينات فايبر ليزر و CNC وأثاث تجاري تم إغلاقها عبر المنظومات التي قمنا ببنائها.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Interactive Google Search Console & Analytics Case Study Simulator -->
+        <div class="rounded-3xl bg-proof-surface border border-proof-border p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+          
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8 border-b border-proof-border/60 pb-6">
+            <div class="text-right">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-mono text-xs uppercase text-emerald-400">Live Case Study Verification</span>
+              </div>
+              <h3 class="text-2xl font-bold text-white font-arabic">محاكي بيانات Google Search Console الصناعية</h3>
+              <p class="text-sm text-gray-400 font-arabic">استعرض المنحنيات الصاعدة للزيارات والظهور لمشاريعنا الفعلية في القطاع الصناعي والتجاري.</p>
+            </div>
+
+            <!-- Case Study Selector Tabs -->
+            <div class="flex items-center gap-2 p-1 rounded-xl bg-proof-card border border-proof-border flex-wrap">
+              <button class="case-tab-btn active px-4 py-2 rounded-lg text-xs font-bold transition-all bg-proof-red text-white" data-client="fabtech">
+                Fabtech Machinery (ماكينات صناعية)
+              </button>
+              <button class="case-tab-btn px-4 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-all" data-client="dne">
+                DNE Industrial KSA (تصنيع ثقيل)
+              </button>
+              <button class="case-tab-btn px-4 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-all" data-client="arc">
+                Arc De Sol (أثاث وديكور فاخر)
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Graph Container -->
+          <div class="relative w-full h-72 sm:h-80 bg-proof-charcoal/80 rounded-xl p-4 border border-proof-border/50">
+            <canvas id="console-chart" class="w-full h-full block"></canvas>
+            
+            <div class="absolute top-6 left-6 flex items-center gap-4 text-xs font-mono">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-[#38bdf8]"></span>
+                <span class="text-gray-300">Total Impressions (الظهور)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-proof-redLight"></span>
+                <span class="text-gray-300">Total Clicks (النقرات المؤكدة)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case Study Quick Summary Data -->
+          <div id="case-study-details" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-right">
+            <div class="p-4 rounded-xl bg-proof-card/60 border border-proof-border/40">
+              <span class="text-[11px] font-mono text-gray-400 block mb-1">الكلمات المتصدرة #1 في جوجل</span>
+              <span id="case-kw" class="text-sm font-bold text-white font-arabic">ماكينات فايبر ليزر مصر، مقصات هيدروليك العاشر</span>
+            </div>
+            <div class="p-4 rounded-xl bg-proof-card/60 border border-proof-border/40">
+              <span class="text-[11px] font-mono text-gray-400 block mb-1">النمو العضوي (Organic Growth)</span>
+              <span id="case-growth" class="text-sm font-bold text-emerald-400 font-mono">+340% زيادة في ظهور خطوط الإنتاج</span>
+            </div>
+            <div class="p-4 rounded-xl bg-proof-card/60 border border-proof-border/40">
+              <span class="text-[11px] font-mono text-gray-400 block mb-1">الأثر التجاري المباشر</span>
+              <span id="case-impact" class="text-sm font-bold text-proof-redLight font-arabic">توريد 14 ماكينة CNC لورش ومصانع جديدة</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- The Difference Matrix: Traditional Agencies vs PROOF -->
+        <div class="mt-16">
+          <h3 class="text-2xl font-bold text-white font-arabic text-center mb-8">
+            لماذا تختار المصانع الكبرى <span class="text-proof-redLight">PROOF Agency</span> بدلاً من الوكالات التقليدية؟
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            
+            <div class="p-6 rounded-2xl bg-red-950/20 border border-red-900/30 text-right">
+              <div class="flex items-center gap-2 text-red-400 font-bold mb-4">
+                <i data-lucide="x-circle" class="w-5 h-5"></i>
+                <span class="text-lg">الوكالات العامة والتقليدية</span>
+              </div>
+              <ul class="space-y-3 text-sm text-gray-300 font-arabic">
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 font-bold mt-0.5">•</span>
+                  <span>التركيز على منشورات السوشيال ميديا الشكلية بدون فهم للقطاع الصناعي.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 font-bold mt-0.5">•</span>
+                  <span>تشتيت المجهود مع 40 عميل صغير دون تعمق في خطوط إنتاج المصنع.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 font-bold mt-0.5">•</span>
+                  <span>استهداف عشوائي يجلب عملاء فضوليين يضيعون وقت فريق المبيعات.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 font-bold mt-0.5">•</span>
+                  <span>فقدان تتبع العائد المالي الحقيقي على الإنفاق الإعلاني (ROAS).</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-proof-red/10 border border-proof-red/40 text-right relative glow-proof">
+              <div class="flex items-center gap-2 text-proof-redLight font-bold mb-4">
+                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                <span class="text-lg">منظومة وكالة PROOF الصناعية</span>
+              </div>
+              <ul class="space-y-3 text-sm text-gray-200 font-arabic">
+                <li class="flex items-start gap-2">
+                  <span class="text-proof-redLight font-bold mt-0.5">✓</span>
+                  <span>إدارة حصرية لـ 10 مصانع كبار فقط بعمق وتفرغ استراتيجي كامل.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-proof-redLight font-bold mt-0.5">✓</span>
+                  <span>اصطياد مديري المشتريات ورؤساء مجالس الإدارة عبر Google Search و LinkedIn.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-proof-redLight font-bold mt-0.5">✓</span>
+                  <span>أتمتة الفلترة بالذكاء الاصطناعي على واتساب لتسليم عملاء جادين فقط للمبيعات.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-proof-redLight font-bold mt-0.5">✓</span>
+                  <span>تتبع متصل Server-Side (CAPI) يحسب تكلفة كل صفقة ماكينة بالمليم.</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== SECTION 3: SHOWREEL & CAPABILITIES ==================== -->
+    <section id="showreel" class="py-24 px-4 sm:px-6 lg:px-8 border-b border-proof-border/50 relative bg-proof-charcoal">
+      
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-proof-border bg-proof-surface text-proof-redLight text-xs font-mono mb-3">
+            <span>03 / INDUSTRIAL PRODUCTION & SYSTEMS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-arabic text-white mb-4">
+            الشوريل السينمائي وترسانة الحلول الـ 6
+          </h2>
+          <p class="text-gray-400 text-base sm:text-lg font-arabic">
+            هيبة مصنعك البصرية هي جواز سفرك للتعاقدات الكبرى والتصدير للخليج وأوروبا.
+          </p>
+        </div>
+
+        <!-- Landscape Cinematic Showreel Video Theater Frame -->
+        <div class="max-w-5xl mx-auto mb-20">
+          <div class="relative rounded-3xl overflow-hidden border border-proof-red/40 bg-black shadow-2xl glow-purple group">
+            
+            <!-- Video Player / Simulated Showcase (16:9 Landscape Ratio) -->
+            <div class="relative w-full aspect-video flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#160c1d] via-[#09050d] to-[#1a0f26]">
+              
+              <!-- Ambient background industrial visual graphics -->
+              <div class="absolute inset-0 bg-dots-pattern opacity-40"></div>
+              
+              <!-- Video Placeholder & Canvas Visualization -->
+              <div class="relative z-10 flex flex-col items-center justify-center text-center p-6">
+                
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-proof-red/80 hover:bg-proof-redLight text-white flex items-center justify-center shadow-2xl shadow-proof-red/50 cursor-pointer transform group-hover:scale-110 transition-all duration-300 mb-6" id="play-showreel-btn">
+                  <i data-lucide="play" class="w-10 h-10 ml-1"></i>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/60 border border-proof-border text-[11px] font-mono text-gray-300">
+                    <span class="w-2 h-2 rounded-full bg-proof-red animate-ping"></span>
+                    <span>4K 60FPS INDUSTRIAL SHOWREEL</span>
+                  </div>
+                  <h3 class="text-xl sm:text-3xl font-extrabold text-white font-arabic">
+                    شاهد أحدث أعمال وتصوير المصانع لوكالة PROOF
+                  </h3>
+                  <p class="text-xs sm:text-sm text-gray-400 max-w-lg font-arabic">
+                    إنتاج سينمائي لخطوط الإنتاج، ماكينات تشكيل المعادن، والمنشآت الصناعية الفاخرة.
+                  </p>
+                </div>
+
+              </div>
+
+              <!-- Live Audio / Motion Equalizer Bars at bottom -->
+              <div class="absolute bottom-4 left-6 right-6 flex items-center justify-between text-xs font-mono text-gray-400 z-10">
+                <div class="flex items-center gap-1.5">
+                  <div class="flex items-end gap-1 h-4">
+                    <span class="w-1 bg-proof-red h-2 animate-pulse"></span>
+                    <span class="w-1 bg-proof-red h-4 animate-pulse" style="animation-delay: 0.2s"></span>
+                    <span class="w-1 bg-proof-red h-3 animate-pulse" style="animation-delay: 0.4s"></span>
+                    <span class="w-1 bg-proof-red h-1 animate-pulse" style="animation-delay: 0.1s"></span>
+                  </div>
+                  <span>PROOF_SHOWREEL_LANDSCAPE.MP4</span>
+                </div>
+                <span class="text-proof-redLight">READY TO STREAM</span>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- The 6 Integrated Industrial Pillars -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <div class="p-8 rounded-2xl bg-proof-surface border border-proof-border hover:border-proof-red/40 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-red/15 border border-proof-red/30 flex items-center justify-center text-proof-redLight mb-6 group-hover:scale-110 transition-transform">
+              <i data-lucide="target" class="w-6 h-6"></i>
+            </div>
+            <span class="font-mono text-xs text-proof-redLight block mb-2">PILLAR 01</span>
+            <h3 class="text-xl font-bold text-white font-arabic mb-3">حملات Performance واصطياد المشتريات</h3>
+            <p class="text-sm text-gray-400 font-arabic leading-relaxed">
+              إعلانات دقيقة على Google Search و LinkedIn تستهدف أصحاب المصانع ومديري المشاريع في العاشر من رمضان والخليج مع تصفير إهدار الميزانيات.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-2xl bg-proof-surface border border-proof-border hover:border-proof-red/40 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-purpleMedium/30 border border-proof-purpleLight/40 flex items-center justify-center text-purple-300 mb-6 group-hover:scale-110 transition-transform">
+              <i data-lucide="layout-grid" class="w-6 h-6"></i>
+            </div>
+            <span class="font-mono text-xs text-purple-400 block mb-2">PILLAR 02</span>
+            <h3 class="text-xl font-bold text-white font-arabic mb-3">تطوير الويب الصناعي عالي التحويل</h3>
+            <p class="text-sm text-gray-400 font-arabic leading-relaxed">
+              مواقع ومتاجر وكتالوجات ماكينات تفاعلية بـ Next.js و Clean WordPress مصممة خصيصاً لتسهيل طلب عروض الأسعار (RFQ) وسرعة 95+ على Lighthouse.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-2xl bg-proof-surface border border-proof-border hover:border-proof-red/40 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-red/15 border border-proof-red/30 flex items-center justify-center text-proof-redLight mb-6 group-hover:scale-110 transition-transform">
+              <i data-lucide="activity" class="w-6 h-6"></i>
+            </div>
+            <span class="font-mono text-xs text-proof-redLight block mb-2">PILLAR 03</span>
+            <h3 class="text-xl font-bold text-white font-arabic mb-3">التتبع الخادم المتقدم (Server-Side CAPI)</h3>
+            <p class="text-sm text-gray-400 font-arabic leading-relaxed">
+              ربط مباشر لـ Meta Conversions API و Google Tag Manager لحساب تكلفة كل عميل صناعي وتغذية خوارزميات الذكاء الاصطناعي بأدق البيانات.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-2xl bg-proof-surface border border-proof-border hover:border-proof-red/40 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-purpleLight/20 border border-proof-purpleLight/40 flex items-center justify-center text-pink-300 mb-6 group-hover:scale-110 transition-transform">
+              <i data-lucide="video" class="w-6 h-6"></i>
+            </div>
+            <span class="font-mono text-xs text-pink-400 block mb-2">PILLAR 04</span>
+            <h3 class="text-xl font-bold text-white font-arabic mb-3">التصوير الصناعي والإنتاج السينمائي</h3>
+            <p class="text-sm text-gray-400 font-arabic leading-relaxed">
+              فريق إنتاج متخصص يصور داخل المصانع وورش التشكيل لتوثيق قوة خطوط الإنتاج والشهادات بجودة تفتح أبواب التصدير الخارجي.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-2xl bg-proof-surface border border-proof-border hover:border-proof-red/40 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-red/15 border border-proof-red/30 flex items-center justify-center text-proof-redLight mb-6 group-hover:scale-110 transition-transform">
+              <i data-lucide="bot" class="w-6 h-6"></i>
+            </div>
+            <span class="font-mono text-xs text-proof-redLight block mb-2">PILLAR 05</span>
+            <h3 class="text-xl font-bold text-white font-arabic mb-3">أتمتة المبيعات وتأهيل العملاء (AI & CRM)</h3>
+            <p class="text-sm text-gray-400 font-arabic leading-relaxed">
+              ربط النماذج بالواتساب وأنظمة CRM مثل Twenty CRM لتأهيل العملاء آلياً، بحيث لا يصل لمدير المبيعات إلا أصحاب المصانع الجادين.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-2xl bg-proof-surface border border-proof-border hover:border-proof-red/40 transition-all duration-300 group">
+            <div class="w-12 h-12 rounded-xl bg-proof-purpleMedium/30 border border-proof-purpleLight/40 flex items-center justify-center text-purple-300 mb-6 group-hover:scale-110 transition-transform">
+              <i data-lucide="compass" class="w-6 h-6"></i>
+            </div>
+            <span class="font-mono text-xs text-purple-400 block mb-2">PILLAR 06</span>
+            <h3 class="text-xl font-bold text-white font-arabic mb-3">أبحاث السوق والنمو الاستراتيجي</h3>
+            <p class="text-sm text-gray-400 font-arabic leading-relaxed">
+              دراسة عميقة للمنافسين في قطاعك الصناعي، تحديد الفجوات السعرية، وبناء ميزة تنافسية حقيقية تجعل مصنعك الخيار الأول دائماً.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== SECTION 4: EXCLUSIVE 10 FACTORIES PARTNERSHIP ==================== -->
+    <section id="exclusive-ten" class="py-24 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-b from-proof-charcoal via-proof-surface to-proof-charcoal">
+      
+      <div class="max-w-5xl mx-auto">
+        
+        <!-- Manifesto Card -->
+        <div class="rounded-3xl bg-gradient-to-br from-proof-card to-[#23142c] border-2 border-proof-red/40 p-8 sm:p-12 relative overflow-hidden shadow-2xl glow-proof text-right mb-16">
+          
+          <div class="absolute -top-12 -left-12 w-48 h-48 bg-proof-red/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-proof-red/20 border border-proof-red/30 text-proof-redLight text-xs font-mono mb-4">
+            <span class="w-2 h-2 rounded-full bg-proof-red animate-ping"></span>
+            <span>THE 10-FACTORY STRATEGIC ALLIANCE</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-black font-arabic text-white mb-6">
+            نعمل مع <span class="text-transparent bg-clip-text bg-gradient-to-r from-proof-red to-pink-400">10 مصانع وشركات كبرى فقط</span> في مصر.
+          </h2>
+
+          <p class="text-base sm:text-lg text-gray-300 font-arabic leading-relaxed mb-6">
+            فلسفتنا في وكالة PROOF هي <strong>"العمق والتركيز وليس العدد"</strong>. نرفض تشتيت جهودنا بين عشرات الحسابات الصغيرة، ونفضل التفرغ التام لإدارة المنظومة التسويقية والبيعية لـ 10 مصانع طموحة فقط لنصنع منها قادة في أسواقها المحلية وأسواق التصدير.
+          </p>
+
+          <div class="flex items-center gap-4 flex-wrap bg-proof-charcoal/80 p-4 rounded-xl border border-proof-border text-sm font-mono">
+            <span class="text-gray-400">حالة الشراكات الحالية:</span>
+            <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+              7 مصانع نشطة
+            </span>
+            <span class="px-2.5 py-1 rounded bg-proof-red/20 text-proof-redLight font-bold border border-proof-red/30">
+              متبقي 3 مقاعد فقط لعام 2026/2027
+            </span>
+          </div>
+
+        </div>
+
+        <!-- VIP Direct WhatsApp & Audit Booking Form -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Contact Coordinates Card (Left Column) -->
+          <div class="lg:col-span-5 space-y-6 text-right">
+            
+            <div class="p-6 rounded-2xl bg-proof-surface border border-proof-border">
+              <h3 class="text-xl font-bold text-white font-arabic mb-4">التواصل المباشر مع المؤسس</h3>
+              <p class="text-xs text-gray-400 font-arabic leading-relaxed mb-6">
+                تحدث مباشرة مع حسين القصاص (مدير النمو والتسويق الاستراتيجي لوكالة PROOF) لمناقشة أهداف مصنعك وتحديد جاهزيته للشراكة.
+              </p>
+
+              <div class="space-y-4 text-sm font-arabic">
+                
+                <a href="https://wa.me/201550826700?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%82%D8%B5%D8%A7%D8%B5%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AD%D8%AC%D8%B2%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%AA%D8%AF%D9%82%D9%8A%D9%82%20%D8%AA%D8%B3%D9%88%D9%8A%D9%82%D9%8A%20%D9%88%D9%86%D9%85%D9%88%20%D9%84%D9%85%D8%B5%D9%86%D8%B9%D9%86%D8%A7%20%D9%85%D8%B9%20PROOF%20Agency" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/40 transition-all flex items-center gap-3 text-emerald-300 font-bold group">
+                  <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs font-mono text-emerald-400">WHATSAPP VIP DIRECT</span>
+                    <span class="text-sm font-mono tracking-wider">01550826700</span>
+                  </div>
+                </a>
+
+                <a href="tel:01550826700" class="p-3.5 rounded-xl bg-proof-card border border-proof-border hover:border-proof-red/40 transition-all flex items-center gap-3 text-gray-200 group">
+                  <div class="w-10 h-10 rounded-lg bg-proof-red/20 flex items-center justify-center text-proof-red group-hover:scale-110 transition-transform">
+                    <i data-lucide="phone-call" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs font-mono text-gray-400">DIRECT PHONE</span>
+                    <span class="text-sm font-mono tracking-wider">01550826700</span>
+                  </div>
+                </a>
+
+                <a href="mailto:hussien12elkassas@gmail.com" class="p-3.5 rounded-xl bg-proof-card border border-proof-border hover:border-proof-red/40 transition-all flex items-center gap-3 text-gray-200 group">
+                  <div class="w-10 h-10 rounded-lg bg-proof-purpleMedium/30 flex items-center justify-center text-purple-300 group-hover:scale-110 transition-transform">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs font-mono text-gray-400">OFFICIAL EMAIL</span>
+                    <span class="text-xs font-mono">hussien12elkassas@gmail.com</span>
+                  </div>
+                </a>
+
+                <div class="p-3.5 rounded-xl bg-proof-card border border-proof-border flex items-center gap-3 text-gray-200">
+                  <div class="w-10 h-10 rounded-lg bg-proof-red/20 flex items-center justify-center text-proof-red">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs font-mono text-gray-400">HQ LOCATION</span>
+                    <span class="text-xs font-arabic">مدينة العاشر من رمضان، الشرقية، مصر</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Interactive Factory Audit Booking Form (Right Column) -->
+          <div class="lg:col-span-7">
+            <div class="p-6 sm:p-8 rounded-2xl bg-proof-surface border border-proof-border text-right relative">
+              
+              <h3 class="text-2xl font-bold text-white font-arabic mb-2">طلب تدقيق تسويقي وصناعي لمصنعك</h3>
+              <p class="text-xs sm:text-sm text-gray-400 font-arabic mb-6">
+                سجل بيانات مصنعك، وسنقوم بتحليل حضورك الرقمي وفرص نموك الصناعي والرد عليك في غضون 24 ساعة.
+              </p>
+
+              <form id="audit-form" class="space-y-4">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-gray-300 font-arabic mb-1.5">اسم المسؤول / المنصب</label>
+                    <input type="text" id="form-name" required placeholder="مثال: م. أحمد عبد العزيز (رئيس مجلس الإدارة)" class="w-full px-4 py-3 rounded-xl bg-proof-card border border-proof-border focus:border-proof-red focus:outline-none text-white text-sm font-arabic placeholder-gray-500">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-gray-300 font-arabic mb-1.5">اسم المصنع أو الشركة</label>
+                    <input type="text" id="form-factory" required placeholder="مثال: الشركة الهندسية لتشكيل المعادن" class="w-full px-4 py-3 rounded-xl bg-proof-card border border-proof-border focus:border-proof-red focus:outline-none text-white text-sm font-arabic placeholder-gray-500">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-gray-300 font-arabic mb-1.5">رقم الهاتف / الواتساب</label>
+                    <input type="tel" id="form-phone" required placeholder="01XXXXXXXXX" class="w-full px-4 py-3 rounded-xl bg-proof-card border border-proof-border focus:border-proof-red focus:outline-none text-white text-sm font-mono placeholder-gray-500" dir="ltr">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-gray-300 font-arabic mb-1.5">القطاع الصناعي</label>
+                    <select id="form-sector" class="w-full px-4 py-3 rounded-xl bg-proof-card border border-proof-border focus:border-proof-red focus:outline-none text-white text-sm font-arabic">
+                      <option value="ماكينات CNC وليزر">ماكينات CNC وفايبر ليزر وخطوط إنتاج</option>
+                      <option value="تشكيل معادن وهياكل حديدية">تشكيل معادن وهياكل حديدية</option>
+                      <option value="لوحات كهربائية وصناعات هندسية">لوحات كهربائية وصناعات هندسية</option>
+                      <option value="صناعات بلاستيكية وتعبئة وتغليف">صناعات بلاستيكية وتعبئة وتغليف</option>
+                      <option value="أثاث ومشاريع ديكور تجاري">أثاث ومشاريع ديكور تجاري</option>
+                      <option value="قطاع صناعي آخر">قطاع صناعي آخر</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 font-arabic mb-1.5">التحدي أو الهدف الأكبر لمصنعك حالياً</label>
+                  <textarea id="form-challenge" rows="3" placeholder="مثال: نرغب في فتح قنوات تصدير جديدة، أو زيادة طلبات عروض الأسعار لماكيناتنا في العاشر من رمضان.." class="w-full px-4 py-3 rounded-xl bg-proof-card border border-proof-border focus:border-proof-red focus:outline-none text-white text-sm font-arabic placeholder-gray-500"></textarea>
+                </div>
+
+                <button type="submit" id="form-submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-proof-red via-proof-redLight to-proof-purpleMedium hover:from-proof-redLight hover:to-proof-purpleLight text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-xl shadow-proof-red/25 flex items-center justify-center gap-2 cursor-pointer">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  <span>إرسال طلب التدقيق وحجز المقعد الاستراتيجي</span>
+                </button>
+
+                <div id="form-feedback" class="hidden p-3 rounded-lg text-xs font-arabic text-center"></div>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-proof-border/60 bg-proof-charcoal py-12 px-4 sm:px-6 lg:px-8 text-xs font-arabic relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg p-1 bg-gradient-to-br from-proof-red to-proof-purpleDark border border-proof-red/40 flex items-center justify-center">
+          <img src="assets/icon_white.svg" alt="PROOF Icon" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <span class="font-sans font-bold text-white text-base tracking-wider block">PROOF AGENCY</span>
+          <span class="text-gray-400 text-[11px]">Creative & Growth Agency for Industrial Enterprises</span>
+        </div>
+      </div>
+
+      <p class="text-gray-400 max-w-md font-arabic">
+        "لا شيء يتوسع بدون إثبات" — المنظومة الحصرية لتسويق ونمو 10 مصانع في القطاع الصناعي المصري والعربي.
+      </p>
+
+      <div class="flex flex-col items-center md:items-end gap-1 font-mono text-[11px] text-gray-500">
+        <span>© 2026 PROOF Agency. All rights reserved.</span>
+        <span>Lead & Built with Full-Stack Precision by Al-Qassas.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== VIDEO MODAL ==================== -->
+  <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="relative w-full max-w-4xl bg-proof-surface border border-proof-red/40 rounded-2xl overflow-hidden shadow-2xl">
+      <div class="p-3 bg-proof-charcoal flex items-center justify-between border-b border-proof-border text-xs font-mono">
+        <span class="text-gray-300">PROOF INDUSTRIAL SHOWREEL • 1080P</span>
+        <button id="close-modal-btn" class="p-1 text-gray-400 hover:text-white cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="aspect-video w-full bg-black flex items-center justify-center relative">
+        <video id="modal-video" controls class="w-full h-full object-contain" poster="assets/icon_gradient.svg">
+          <source src="assets/showreel_demo.mp4" type="video/mp4">
+          عذراً، متصفحك لا يدعم تشغيل الفيديو المباشر.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LOGIC & SCRIPTS ==================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // ----------------------------------------------------------------
+    // 1. Interactive Cursor Logic
+    // ----------------------------------------------------------------
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursor-dot');
+    window.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('a, button, input, textarea, select').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '48px';
+        cursor.style.height = '48px';
+        cursor.style.borderColor = '#c92a4b';
+        cursor.style.backgroundColor = 'rgba(168, 33, 61, 0.1)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '24px';
+        cursor.style.height = '24px';
+        cursor.style.borderColor = '#a8213d';
+        cursor.style.backgroundColor = 'transparent';
+      });
+    });
+
+    // ----------------------------------------------------------------
+    // 2. Web Audio Synthesizer (Zero external dependencies)
+    // ----------------------------------------------------------------
+    let audioCtx = null;
+    let audioEnabled = false;
+    const audioBtn = document.getElementById('audio-toggle-btn');
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playTone(freq, type, duration, gainVal = 0.05) {
+      if (!audioEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (err) {}
+    }
+
+    audioBtn.addEventListener('click', () => {
+      initAudio();
+      audioEnabled = !audioEnabled;
+      if (audioEnabled) {
+        audioBtn.classList.add('bg-proof-red', 'text-white', 'border-proof-red');
+        audioBtn.querySelector('span').textContent = 'FX: ACTIVE';
+        playTone(587.33, 'sine', 0.2, 0.1); // D5 chime
+      } else {
+        audioBtn.classList.remove('bg-proof-red', 'text-white', 'border-proof-red');
+        audioBtn.querySelector('span').textContent = 'FX: SOUND';
+      }
+    });
+
+    // ----------------------------------------------------------------
+    // 3. THE 2D INDUSTRIAL FACTORY MOTION GRAPHICS ENGINE (HERO CANVAS)
+    // ----------------------------------------------------------------
+    const canvas = document.getElementById('factory-canvas');
+    const ctx = canvas.getContext('2d');
+    const hudPhase = document.getElementById('factory-phase-indicator');
+    const hudTitle = document.getElementById('hud-title');
+    const hudDesc = document.getElementById('hud-desc');
+    const hudPower = document.getElementById('hud-power');
+
+    let cw, ch;
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      cw = canvas.width = rect.width * (window.devicePixelRatio || 1);
+      ch = canvas.height = rect.height * (window.devicePixelRatio || 1);
+      ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Factory Animation State
+    let animTime = 0;
+    let sparks = [];
+    let enableSparks = true;
+    let camera = { x: 0, y: 0, scale: 1 };
+    let targetCamera = { x: 0, y: 0, scale: 1 };
+
+    // The PROOF Icon entity
+    let proofIcon = {
+      x: 100,
+      y: 200,
+      targetX: 100,
+      targetY: 200,
+      size: 44,
+      rotation: 0,
+      targetRotation: 0,
+      alpha: 1,
+      glow: 20,
+      phase: 0 // 0: Enter, 1: Conveyor, 2: Laser, 3: Piston, 4: Server, 5: ZoomOut Apex
+    };
+
+    // Machine Stations
+    const stations = {
+      conveyor: { x: 180, y: 340, active: false, speed: 0 },
+      laser: { x: 440, y: 220, active: false, headX: 440, laserFiring: false },
+      stamping: { x: 720, y: 260, active: false, pistonY: 0 },
+      server: { x: 960, y: 240, active: false, lightPulse: 0 }
+    };
+
+    // Spark Particle System
+    function addSparks(x, y, count = 8, color = '#ff8c38') {
+      if (!enableSparks) return;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.random() * Math.PI) - (Math.PI / 2);
+        const speed = 2 + Math.random() * 5;
+        sparks.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1),
+          vy: -Math.abs(Math.sin(angle) * speed),
+          life: 1,
+          decay: 0.02 + Math.random() * 0.03,
+          color: color,
+          size: 1 + Math.random() * 2.5
+        });
+      }
+    }
+
+    // Helper: Draw PROOF Inverted Document Icon at (x, y)
+    function drawProofDocumentIcon(c, x, y, size, colorGradient = true) {
+      c.save();
+      c.translate(x, y);
+
+      // Gradient
+      if (colorGradient) {
+        const grad = c.createLinearGradient(0, -size/2, 0, size/2);
+        grad.addColorStop(0, '#a8213d');
+        grad.addColorStop(0.5, '#4f224b');
+        grad.addColorStop(1, '#2d1f32');
+        c.fillStyle = grad;
+      } else {
+        c.fillStyle = '#ffffff';
+      }
+
+      // Exact Folded Inverted Document Geometry
+      c.beginPath();
+      const w = size * 0.85;
+      const h = size * 1.1;
+      const fold = size * 0.28;
+
+      // Inverted document with bottom-left or bottom-right angled fold
+      c.moveTo(-w/2, -h/2);
+      c.lineTo(w/2, -h/2);
+      c.lineTo(w/2, h/2);
+      c.lineTo(-w/2 + fold, h/2);
+      c.lineTo(-w/2, h/2 - fold);
+      c.closePath();
+      c.fill();
+
+      // Fold Triangle Accent
+      c.beginPath();
+      c.moveTo(-w/2 + fold, h/2);
+      c.lineTo(-w/2 + fold, h/2 - fold);
+      c.lineTo(-w/2, h/2 - fold);
+      c.closePath();
+      c.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      c.fill();
+
+      // Horizontal Proof Data Lines inside Document
+      c.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+      c.lineWidth = 1.5;
+      c.beginPath();
+      c.moveTo(-w/4, -h/4);
+      c.lineTo(w/4, -h/4);
+      c.moveTo(-w/4, 0);
+      c.lineTo(w/3, 0);
+      c.moveTo(-w/4, h/5);
+      c.lineTo(w/5, h/5);
+      c.stroke();
+
+      c.restore();
+    }
+
+    // Storyboard Sequence
+    let sequenceTimer = 0;
+    function runStoryboard() {
+      sequenceTimer++;
+
+      const w = canvas.getBoundingClientRect().width;
+      const h = canvas.getBoundingClientRect().height;
+
+      // Phase 0: Icon Entry (Frames 0 -> 100)
+      if (sequenceTimer < 100) {
+        proofIcon.phase = 0;
+        proofIcon.targetX = w * 0.15;
+        proofIcon.targetY = h * 0.45;
+        targetCamera = { x: 0, y: 0, scale: 1.1 };
+        hudPhase.textContent = 'PHASE 01: ENTRY';
+        hudTitle.textContent = 'اقتحام أيقونة الإثبات للمصنع';
+        hudDesc.textContent = 'أيقونة PROOF تدخل مصنع العاشر من رمضان في وضع السكون الكامل قبل التفعيل..';
+        hudPower.textContent = '15%';
+      }
+      // Phase 1: Conveyor Activation (Frames 100 -> 240)
+      else if (sequenceTimer < 240) {
+        proofIcon.phase = 1;
+        proofIcon.targetX = w * 0.25;
+        proofIcon.targetY = h * 0.65;
+        targetCamera = { x: -w * 0.05, y: -h * 0.1, scale: 1.25 };
+        stations.conveyor.active = true;
+        stations.conveyor.speed = 2;
+        if (sequenceTimer % 15 === 0) {
+          addSparks(w * 0.25, h * 0.68, 5, '#a8213d');
+          playTone(220, 'square', 0.08, 0.03);
+        }
+        hudPhase.textContent = 'PHASE 02: CONVEYOR ACTIVE';
+        hudTitle.textContent = 'تفعيل خطوط التوريد والحركة';
+        hudDesc.textContent = 'الأيقونة تنشط سيور النقل الحركية؛ تدفق المواد الخام والبيانات يبدأ بالسريان السريع.';
+        hudPower.textContent = '40%';
+      }
+      // Phase 2: CNC Fiber Laser Precision (Frames 240 -> 380)
+      else if (sequenceTimer < 380) {
+        proofIcon.phase = 2;
+        proofIcon.targetX = w * 0.48;
+        proofIcon.targetY = h * 0.35;
+        targetCamera = { x: -w * 0.18, y: 0, scale: 1.3 };
+        stations.laser.active = true;
+        stations.laser.laserFiring = true;
+        if (sequenceTimer % 4 === 0) {
+          addSparks(w * 0.48 + Math.sin(sequenceTimer * 0.2) * 30, h * 0.62, 10, '#ffaa40');
+          playTone(880 + Math.random() * 200, 'sawtooth', 0.04, 0.02);
+        }
+        hudPhase.textContent = 'PHASE 03: CNC LASER ENGAGED';
+        hudTitle.textContent = 'ماكينة الفايبر ليزر تقطع بدقة متناهية';
+        hudDesc.textContent = 'رأس الليزر يشتعل بنبضات قوية لقص وتشكيل الصاج الصلب بدقة ميكرومترية (رمز لاستهداف المشترين بدقة).';
+        hudPower.textContent = '65%';
+      }
+      // Phase 3: Hydraulic Piston Stamping (Frames 380 -> 520)
+      else if (sequenceTimer < 520) {
+        proofIcon.phase = 3;
+        proofIcon.targetX = w * 0.72;
+        proofIcon.targetY = h * 0.42;
+        targetCamera = { x: -w * 0.32, y: -h * 0.05, scale: 1.25 };
+        stations.stamping.active = true;
+        const stampCycle = Math.sin(sequenceTimer * 0.15);
+        stations.stamping.pistonY = Math.max(0, stampCycle * 35);
+        if (stampCycle > 0.95 && sequenceTimer % 5 === 0) {
+          addSparks(w * 0.72, h * 0.65, 14, '#ffffff');
+          playTone(110, 'triangle', 0.15, 0.06); // Heavy bass thud
+        }
+        hudPhase.textContent = 'PHASE 04: HYDRAULIC POWER';
+        hudTitle.textContent = 'المكبس الهيدروليكي يختم الجودة';
+        hudDesc.textContent = 'ضغط هيدروليكي هائل يشكل المنتج النهائي بإحكام؛ كل خطوة مدعومة ببيانات واختبارات قياس.';
+        hudPower.textContent = '85%';
+      }
+      // Phase 4: Server Command Tower (Frames 520 -> 640)
+      else if (sequenceTimer < 640) {
+        proofIcon.phase = 4;
+        proofIcon.targetX = w * 0.88;
+        proofIcon.targetY = h * 0.38;
+        targetCamera = { x: -w * 0.4, y: 0, scale: 1.2 };
+        stations.server.active = true;
+        stations.server.lightPulse = Math.sin(sequenceTimer * 0.2);
+        hudPhase.textContent = 'PHASE 05: DATA & AUTOMATION';
+        hudTitle.textContent = 'خوادم التتبع وأتمتة الـ CRM';
+        hudDesc.textContent = 'ربط أنظمة الـ CAPI والواتساب لإدارة تدفق الصفقات دون تأخير لحظة واحدة.';
+        hudPower.textContent = '95%';
+      }
+      // Phase 5: The Grand Zoom-Out & Monolithic Apex (Frames 640+)
+      else {
+        proofIcon.phase = 5;
+        proofIcon.targetX = w * 0.5;
+        proofIcon.targetY = h * 0.24;
+        proofIcon.size = 56;
+        targetCamera = { x: 0, y: 0, scale: 0.95 }; // Full wide zoom out
+        stations.conveyor.speed = 3;
+        stations.laser.laserFiring = true;
+        if (sequenceTimer % 12 === 0) {
+          addSparks(w * 0.48, h * 0.62, 4, '#ffaa40');
+        }
+        hudPhase.textContent = 'PHASE 06: FULL SYNCHRONIZATION';
+        hudTitle.textContent = 'المصنع يعمل بكامل طاقته • لا شيء يكبر بدون PROOF';
+        hudDesc.textContent = 'المصنع بالكامل يعمل بتناغم تام. الأيقونة تستقر شامخة فوق صرح الإنتاج: Nothing Scales Without PROOF.';
+        hudPower.textContent = '100% MAXIMUM';
+      }
+
+      // Smooth Lerping of Icon Position & Camera
+      proofIcon.x += (proofIcon.targetX - proofIcon.x) * 0.06;
+      proofIcon.y += (proofIcon.targetY - proofIcon.y) * 0.06;
+      proofIcon.rotation += ((Math.sin(sequenceTimer * 0.05) * 0.1) - proofIcon.rotation) * 0.1;
+
+      camera.x += (targetCamera.x - camera.x) * 0.05;
+      camera.y += (targetCamera.y - camera.y) * 0.05;
+      camera.scale += (targetCamera.scale - camera.scale) * 0.05;
+    }
+
+    // Main Canvas Render Loop
+    function renderFactory() {
+      const w = canvas.getBoundingClientRect().width;
+      const h = canvas.getBoundingClientRect().height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.save();
+      // Apply Camera Transform
+      ctx.translate(w/2, h/2);
+      ctx.scale(camera.scale, camera.scale);
+      ctx.translate(-w/2 + camera.x, -h/2 + camera.y);
+
+      // 1. Draw Factory Architecture Background (Girders, Walls, Blueprint)
+      ctx.strokeStyle = 'rgba(168, 33, 61, 0.12)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w * 1.5; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x - w*0.25, 0);
+        ctx.lineTo(x - w*0.25, h);
+        ctx.stroke();
+      }
+
+      // Steel Overhead Crane Truss
+      ctx.strokeStyle = '#2d1f32';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(0, 70);
+      ctx.lineTo(w, 70);
+      ctx.stroke();
+
+      // Truss Cross-Braces
+      ctx.strokeStyle = 'rgba(168, 33, 61, 0.25)';
+      ctx.lineWidth = 1.5;
+      for (let i = 0; i < w; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(i, 40);
+        ctx.lineTo(i + 50, 70);
+        ctx.lineTo(i + 100, 40);
+        ctx.stroke();
+      }
+
+      // 2. Machine Station 1: Conveyor Belt
+      const cvX = w * 0.12;
+      const cvY = h * 0.72;
+      const cvW = w * 0.25;
+      ctx.fillStyle = '#181120';
+      ctx.fillRect(cvX, cvY, cvW, 18);
+      ctx.strokeStyle = stations.conveyor.active ? '#a8213d' : '#3d2542';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(cvX, cvY, cvW, 18);
+
+      // Rotating Rollers
+      for (let rx = cvX + 15; rx < cvX + cvW - 10; rx += 25) {
+        ctx.fillStyle = '#2d1f32';
+        ctx.beginPath();
+        ctx.arc(rx, cvY + 9, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = stations.conveyor.active ? '#c92a4b' : '#555';
+        ctx.stroke();
+      }
+
+      // Moving Metal Ingot / Lead Data Box
+      if (stations.conveyor.active) {
+        const boxProgress = (sequenceTimer * stations.conveyor.speed) % cvW;
+        ctx.fillStyle = '#ff8c38';
+        ctx.fillRect(cvX + boxProgress, cvY - 14, 20, 14);
+        ctx.strokeStyle = '#ffffff';
+        ctx.strokeRect(cvX + boxProgress, cvY - 14, 20, 14);
+      }
+
+      // 3. Machine Station 2: CNC Fiber Laser
+      const lX = w * 0.48;
+      const lY = h * 0.65;
+      // Laser Machine Base & Pillars
+      ctx.fillStyle = '#160e1d';
+      ctx.fillRect(lX - 45, lY - 120, 90, 120);
+      ctx.strokeStyle = stations.laser.active ? '#a8213d' : '#332039';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(lX - 45, lY - 120, 90, 120);
+
+      // Laser Gantry Head
+      const headOffset = Math.sin(sequenceTimer * 0.1) * 25;
+      ctx.fillStyle = '#4f224b';
+      ctx.fillRect(lX + headOffset - 12, lY - 60, 24, 25);
+
+      // The Glowing Crimson Laser Beam!
+      if (stations.laser.laserFiring) {
+        ctx.strokeStyle = '#a8213d';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#ff2b54';
+        ctx.shadowBlur = 15;
+        ctx.beginPath();
+        ctx.moveTo(lX + headOffset, lY - 35);
+        ctx.lineTo(lX + headOffset, lY);
+        ctx.stroke();
+        ctx.shadowBlur = 0; // Reset
+      }
+
+      // 4. Machine Station 3: Hydraulic Stamping Piston
+      const sX = w * 0.72;
+      const sY = h * 0.68;
+      ctx.fillStyle = '#1c1224';
+      ctx.fillRect(sX - 35, sY - 150, 70, 150);
+      ctx.strokeStyle = stations.stamping.active ? '#362056' : '#2d1f32';
+      ctx.strokeRect(sX - 35, sY - 150, 70, 150);
+
+      // Piston Rod
+      const pY = stations.stamping.pistonY;
+      ctx.fillStyle = '#c92a4b';
+      ctx.fillRect(sX - 18, sY - 80 + pY, 36, 40);
+
+      // Pressure Gauge
+      ctx.beginPath();
+      ctx.arc(sX, sY - 110, 12, 0, Math.PI * 2);
+      ctx.fillStyle = '#0b070e';
+      ctx.fill();
+      ctx.strokeStyle = '#ff8c38';
+      ctx.stroke();
+
+      // 5. Machine Station 4: Server Rack & Digital Command
+      const srvX = w * 0.88;
+      const srvY = h * 0.62;
+      ctx.fillStyle = '#120b18';
+      ctx.fillRect(srvX - 30, srvY - 100, 60, 100);
+      ctx.strokeStyle = stations.server.active ? '#38bdf8' : '#22162a';
+      ctx.strokeRect(srvX - 30, srvY - 100, 60, 100);
+
+      // Blinking Data LEDs
+      for (let ly = srvY - 90; ly < srvY - 10; ly += 14) {
+        ctx.fillStyle = stations.server.active && Math.random() > 0.4 ? '#38bdf8' : '#33223f';
+        ctx.fillRect(srvX - 22, ly, 8, 4);
+        ctx.fillStyle = stations.server.active && Math.random() > 0.3 ? '#a8213d' : '#33223f';
+        ctx.fillRect(srvX + 14, ly, 8, 4);
+      }
+
+      // 6. Draw Sparks
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.vy += 0.15; // Gravity
+        s.life -= s.decay;
+
+        if (s.life <= 0) {
+          sparks.splice(i, 1);
+          continue;
+        }
+
+        ctx.fillStyle = s.color;
+        ctx.shadowColor = s.color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      // 7. Draw The Hero PROOF Icon (Inverted Document)
+      ctx.save();
+      ctx.shadowColor = 'rgba(168, 33, 61, 0.8)';
+      ctx.shadowBlur = proofIcon.glow;
+      drawProofDocumentIcon(ctx, proofIcon.x, proofIcon.y, proofIcon.size, true);
+      ctx.restore();
+
+      // If at Apex (Phase 5), draw radiating pulse waves and slogan preview
+      if (proofIcon.phase === 5) {
+        const pulseR = 40 + (Math.sin(sequenceTimer * 0.08) * 15);
+        ctx.strokeStyle = 'rgba(168, 33, 61, 0.35)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(proofIcon.x, proofIcon.y, pulseR, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'rgba(79, 34, 75, 0.4)';
+        ctx.beginPath();
+        ctx.arc(proofIcon.x, proofIcon.y, pulseR + 20, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+
+      // Step Storyboard
+      runStoryboard();
+      requestAnimationFrame(renderFactory);
+    }
+
+    renderFactory();
+
+    // Canvas Replay & Spark Controls
+    document.getElementById('replay-motion-btn').addEventListener('click', () => {
+      sequenceTimer = 0;
+      stations.conveyor.active = false;
+      stations.laser.active = false;
+      stations.stamping.active = false;
+      stations.server.active = false;
+      proofIcon.size = 44;
+      playTone(440, 'sine', 0.15, 0.08);
+    });
+
+    document.getElementById('toggle-sparks-btn').addEventListener('click', function() {
+      enableSparks = !enableSparks;
+      this.textContent = enableSparks ? 'شرر الليزر: نشط' : 'شرر الليزر: متوقف';
+      this.classList.toggle('text-proof-redLight', enableSparks);
+    });
+
+    // ----------------------------------------------------------------
+    // 4. Interactive Google Search Console Graph Simulator (Section 2)
+    // ----------------------------------------------------------------
+    const chartCanvas = document.getElementById('console-chart');
+    const chartCtx = chartCanvas.getContext('2d');
+
+    const clientData = {
+      fabtech: {
+        kw: 'ماكينات فايبر ليزر مصر، مقصات هيدروليك العاشر، CNC راوتر',
+        growth: '+340% زيادة في ظهور خطوط الإنتاج والماكينات',
+        impact: 'توريد 14 ماكينة CNC لمصانع جديدة في مصر والخليج',
+        pointsImpressions: [12, 19, 28, 42, 65, 88, 120, 165, 210, 290, 380, 480],
+        pointsClicks: [1, 2, 4, 7, 12, 18, 26, 38, 54, 72, 98, 140]
+      },
+      dne: {
+        kw: 'Heavy Manufacturing KSA, توريد خطوط إنتاج صناعية السعودية',
+        growth: '+210% استهداف مباشر لمديري مشتريات المصانع الكبرى',
+        impact: 'إغلاق 3 صفقات كبرى لتوريد معدات هيدروليكية بالرياض',
+        pointsImpressions: [20, 32, 45, 60, 85, 110, 145, 190, 240, 310, 390, 460],
+        pointsClicks: [3, 5, 8, 14, 20, 31, 44, 58, 76, 102, 130, 175]
+      },
+      arc: {
+        kw: 'Luxury Furniture Riyadh, أثاث وديكور فاخر الراجحي',
+        growth: '+420% زيادة معدل التحويل وسرعة حجز الاستشارات',
+        impact: 'مضاعفة مبيعات القطع الفاخرة عبر تجربة رقمية نضاهي العالمية',
+        pointsImpressions: [15, 25, 40, 70, 120, 180, 260, 340, 430, 520, 610, 740],
+        pointsClicks: [2, 4, 9, 18, 32, 50, 78, 110, 145, 190, 230, 295]
+      }
+    };
+
+    let activeClient = 'fabtech';
+
+    function drawChart() {
+      const rect = chartCanvas.getBoundingClientRect();
+      chartCanvas.width = rect.width * (window.devicePixelRatio || 1);
+      chartCanvas.height = rect.height * (window.devicePixelRatio || 1);
+      chartCtx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+
+      const w = rect.width;
+      const h = rect.height;
+      const padding = 35;
+
+      chartCtx.clearRect(0, 0, w, h);
+
+      // Grid Lines
+      chartCtx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      chartCtx.lineWidth = 1;
+      for (let y = padding; y <= h - padding; y += (h - 2*padding)/4) {
+        chartCtx.beginPath();
+        chartCtx.moveTo(padding, y);
+        chartCtx.lineTo(w - padding, y);
+        chartCtx.stroke();
+      }
+
+      const data = clientData[activeClient];
+      const stepX = (w - 2 * padding) / (data.pointsImpressions.length - 1);
+
+      // Helper function to draw curved spline
+      function drawSpline(points, strokeColor, fillColor, maxVal) {
+        chartCtx.beginPath();
+        points.forEach((val, idx) => {
+          const x = padding + (idx * stepX);
+          const y = h - padding - ((val / maxVal) * (h - 2 * padding));
+          if (idx === 0) chartCtx.moveTo(x, y);
+          else chartCtx.lineTo(x, y);
+        });
+
+        chartCtx.strokeStyle = strokeColor;
+        chartCtx.lineWidth = 3;
+        chartCtx.stroke();
+
+        // Fill area
+        chartCtx.lineTo(w - padding, h - padding);
+        chartCtx.lineTo(padding, h - padding);
+        chartCtx.closePath();
+        chartCtx.fillStyle = fillColor;
+        chartCtx.fill();
+
+        // Draw Nodes
+        points.forEach((val, idx) => {
+          const x = padding + (idx * stepX);
+          const y = h - padding - ((val / maxVal) * (h - 2 * padding));
+          chartCtx.beginPath();
+          chartCtx.arc(x, y, 4, 0, Math.PI * 2);
+          chartCtx.fillStyle = strokeColor;
+          chartCtx.fill();
+          chartCtx.strokeStyle = '#0b070e';
+          chartCtx.lineWidth = 2;
+          chartCtx.stroke();
+        });
+      }
+
+      // Draw Impressions Curve (Blue)
+      const maxImp = Math.max(...data.pointsImpressions) * 1.15;
+      const gradImp = chartCtx.createLinearGradient(0, padding, 0, h - padding);
+      gradImp.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+      gradImp.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+      drawSpline(data.pointsImpressions, '#38bdf8', gradImp, maxImp);
+
+      // Draw Clicks Curve (Crimson)
+      const gradClk = chartCtx.createLinearGradient(0, padding, 0, h - padding);
+      gradClk.addColorStop(0, 'rgba(168, 33, 61, 0.35)');
+      gradClk.addColorStop(1, 'rgba(168, 33, 61, 0.0)');
+      drawSpline(data.pointsClicks, '#c92a4b', gradClk, maxImp);
+    }
+
+    drawChart();
+    window.addEventListener('resize', drawChart);
+
+    // Switch Tabs
+    document.querySelectorAll('.case-tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.case-tab-btn').forEach(b => {
+          b.classList.remove('active', 'bg-proof-red', 'text-white');
+          b.classList.add('text-gray-300');
+        });
+        this.classList.add('active', 'bg-proof-red', 'text-white');
+        this.classList.remove('text-gray-300');
+
+        activeClient = this.dataset.client;
+        const d = clientData[activeClient];
+        document.getElementById('case-kw').textContent = d.kw;
+        document.getElementById('case-growth').textContent = d.growth;
+        document.getElementById('case-impact').textContent = d.impact;
+        drawChart();
+        playTone(523.25, 'sine', 0.1, 0.05);
+      });
+    });
+
+    // ----------------------------------------------------------------
+    // 5. Animated Number Counters (ScrollTrigger)
+    // ----------------------------------------------------------------
+    const counters = document.querySelectorAll('.counter');
+    let countersStarted = false;
+
+    function startCounters() {
+      if (countersStarted) return;
+      countersStarted = true;
+      counters.forEach(c => {
+        const target = parseFloat(c.dataset.target);
+        const isDecimal = c.dataset.decimal;
+        let current = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            c.textContent = isDecimal ? target.toFixed(1) : Math.floor(target);
+            clearInterval(timer);
+          } else {
+            c.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+          }
+        }, 20);
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      const el = document.getElementById('proof-data');
+      if (el && el.getBoundingClientRect().top < window.innerHeight * 0.75) {
+        startCounters();
+      }
+    });
+
+    // ----------------------------------------------------------------
+    // 6. Showreel Modal & Video
+    // ----------------------------------------------------------------
+    const modal = document.getElementById('video-modal');
+    const playBtn = document.getElementById('play-showreel-btn');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const modalVideo = document.getElementById('modal-video');
+
+    function openModal() {
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modalVideo.play().catch(() => {});
+    }
+    function closeModal() {
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modalVideo.pause();
+    }
+
+    playBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // ----------------------------------------------------------------
+    // 7. Interactive Audit Booking Form
+    // ----------------------------------------------------------------
+    const auditForm = document.getElementById('audit-form');
+    const submitBtn = document.getElementById('form-submit-btn');
+    const feedback = document.getElementById('form-feedback');
+
+    auditForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('form-name').value.trim();
+      const factory = document.getElementById('form-factory').value.trim();
+      const phone = document.getElementById('form-phone').value.trim();
+      const sector = document.getElementById('form-sector').value;
+      const challenge = document.getElementById('form-challenge').value.trim();
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span class="mr-2">جاري تأكيد حجز المقعد الاستراتيجي...</span>
+      `;
+
+      // Compose WhatsApp Message for direct VIP routing
+      const waText = encodeURIComponent(
+        `مرحباً قصاص، أنا ${name} من مصنع ${factory}.\n` +
+        `قطاعنا: ${sector}\n` +
+        `الهاتف: ${phone}\n` +
+        `التحدي والهدف: ${challenge}\n` +
+        `نرغب في حجز تدقيق تسويقي وصناعي مع وكالة PROOF.`
+      );
+
+      setTimeout(() => {
+        feedback.className = 'p-4 rounded-xl text-xs font-arabic text-center bg-emerald-950/60 border border-emerald-500/50 text-emerald-300 block';
+        feedback.innerHTML = `
+          <div class="font-bold text-sm mb-1">✓ تم تسجيل طلب مصنعك بنجاح في منظومة PROOF</div>
+          <div>تم إرسال الإشعار لـ حسين القصاص. سيتم فتح محادثة الواتساب المباشرة لتأكيد موعد الجلسة فوراً.</div>
+        `;
+
+        submitBtn.innerHTML = `<span>✓ تم الحجز بنجاح</span>`;
+        playTone(659.25, 'sine', 0.25, 0.1); // E5
+
+        // Redirect directly to WhatsApp after 1.5s
+        setTimeout(() => {
+          window.open(`https://wa.me/201550826700?text=${waText}`, '_blank');
+        }, 1200);
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
